@@ -1,4 +1,4 @@
-import InputText from './InputText.vue'
-import InputTextarea from './InputTextarea.vue'
+import InputText from '../packages/inputText/inputText.vue';
+import InputTextarea from '../packages/inputTextarea/inputTextarea.vue';
 
-export default { InputTextarea, InputText }
+export default { InputText, InputTextarea };

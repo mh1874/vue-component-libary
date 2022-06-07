@@ -5,7 +5,7 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "vue": "^3.2.21"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "rollup": "^2.60.2",

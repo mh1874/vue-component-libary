@@ -3,7 +3,7 @@
 var vue = require('vue');
 
 var script$1 = {
-  name: 'InputText'
+  name: 'EPInput',
 };
 
 const _hoisted_1$1 = { type: "text" };
@@ -13,10 +13,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$1.render = render$1;
-script$1.__file = "src/InputText.vue";
+script$1.__file = "packages/inputText/inputText.vue";
 
 var script = {
-  name: 'InputTextarea'
+  name: 'EPInputTextarea',
 };
 
 const _hoisted_1 = { type: "text" };
@@ -26,9 +26,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script.render = render;
-script.__file = "src/InputTextarea.vue";
+script.__file = "packages/inputTextarea/inputTextarea.vue";
 
-var components = { InputTextarea: script, InputText: script$1 };
+var components = { InputText: script$1, InputTextarea: script };
 
 const plugin = {
   install (Vue) {
