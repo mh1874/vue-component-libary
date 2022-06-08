@@ -16,6 +16,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:mh1874/vue-component-library.git master:gh-pages
+git push -f git@gitee.com:beijing_epoch/version-module-frontend.git master:gh-pages
 
 cd -

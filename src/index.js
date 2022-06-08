@@ -1,14 +1,28 @@
-import components from'./components'
+import AppVersion from '../packages/appVersion/index.js';
 
-const plugin = {
-  install (Vue) {
-    for (const prop in components) {
-      if (components.hasOwnProperty(prop)) {
-        const component = components[prop]
-        Vue.component(component.name, component)
-      }
-    }
-  }
+// 放组件
+const components = {
+  AppVersion,
+};
+
+const install = function (Vue) {
+  if (install.installed) return;
+  install.installed = true;
+  Object.values(components).map((component) => {
+    Vue.component(component.name, component);
+  });
+  // Object.values(directives).map(directive => {
+  //   Vue.directive(directive.name, directive);
+  // });
+  // Object.values(vueInstanceFun).map(fun => {
+  //   Vue.use(fun);
+  // });
+};
+
+/** 支持使用标签方式引入 */
+if (typeof window != 'undefined' && window.Vue) {
+  install(window.Vue);
 }
 
-export default plugin
+export default install;
+export { AppVersion };
