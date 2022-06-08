@@ -1,10 +1,12 @@
 import vue from 'rollup-plugin-vue';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { babel } from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import less from 'less';
+import pkg from './package.json';
 
 const isProductionEnv = process.env.NODE_ENV === 'production';
 
@@ -41,27 +43,23 @@ const processLess = function (context, payload) {
   });
 };
 
-const babelOptions = {
-  presets: ['@babel/preset-env'],
-  exclude: 'node_modules/**', // 只转译我们的源代码
-};
-
 export default [
+  // browser-friendly UMD build
   {
     input: 'src/index.js',
     output: [
       {
         format: 'umd',
-        file: 'dist/library-umd.js',
+        file: pkg.browser,
         name: 'myLib',
       },
       {
-        format: 'es',
-        file: 'dist/library-es.js',
+        format: 'cjs',
+        file: pkg.main,
       },
       {
-        format: 'cjs',
-        file: 'dist/library-cjs.js',
+        format: 'es',
+        file: pkg.module,
       },
     ],
     plugins: [
@@ -70,7 +68,9 @@ export default [
         compileTemplate: true, // Explicitly convert template to render function
       }),
       peerDepsExternal(),
+      resolve(), // 这样 Rollup 能找到 `ms`
       commonjs({
+        // 这样 Rollup 能转换 `ms` 为一个ES模块
         include: ['node_modules/**', 'node_modules/**/*'],
       }),
       postcss({
@@ -79,7 +79,7 @@ export default [
         process: processLess,
       }),
       babel({
-        presets: ['@babel/env'],
+        presets: ['@babel/preset-env'],
         plugins: [
           '@babel/plugin-proposal-nullish-coalescing-operator',
           '@babel/plugin-proposal-optional-chaining',
@@ -93,4 +93,10 @@ export default [
       'vue',
     ],
   },
+  // CommonJS (for Node) and ES module (for bundlers) build.
+  // (We could have three entries in the configuration array
+  // instead of two, but it's quicker to generate multiple
+  // builds from a single configuration where possible, using
+  // an array for the `output` option, where we can specify
+  // `file` and `format` for each target)
 ];

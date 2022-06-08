@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.16.0",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "less": "^4.1.2",
@@ -30,7 +31,8 @@
     "vuepress": "^2.0.0-beta.27"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "NODE_ENV=production rollup -c",
+    "dev": "rollup -c -w",
     "prepublishOnly": "npm run build",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -38,6 +40,7 @@
   "version": "0.0.1",
   "main": "dist/library.cjs.js",
   "module": "dist/library-es.js",
+  "browser": "dist/library-umd.js",
   "files": [
     "dist/*"
   ]
